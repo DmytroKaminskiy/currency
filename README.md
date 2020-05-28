@@ -1,11 +1,9 @@
 # Currency
 
-0) PrivatBank
-1) Парсер MonoBank (https://api.monobank.ua/docs/)
-2) http://vkurse.dp.ua/
-3) Источник 3
-4) Источник 4
-5) Источник 5
+0) подключить https://getbootstrap.com/docs/4.5/getting-started/introduction/
+
+1) Показать список рейтов в таблице https://getbootstrap.com/docs/4.5/content/tables/
+2) Добавить в тревис validate_templates, pip check
 
 email testtestapp454545@gmail.com
 
