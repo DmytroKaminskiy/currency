@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %}Rate List{% endblock title %}
+{% block title %}Latest Rates{% endblock title %}
 
 {% block content %}
-    <a href="{% url 'rate:download-csv' %}">Download rates</a>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -13,6 +12,7 @@
             <th scope="col">source</th>
             <th scope="col">amount</th>
             <th scope="col">type</th>
+            <th scope="col">currency</th>
         </tr>
         </thead>
         <tbody>
@@ -24,6 +24,7 @@
                 <td>{{ rate.get_source_display|title }}</td>
                 <td>{{ rate.amount }}</td>
                 <td>{{ rate.get_type_display|upper }}</td>
+                <td>{{ rate.get_currency_type_display }}</td>
             </tr>
         {% endfor %}
         </tbody>
