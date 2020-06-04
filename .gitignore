@@ -6,4 +6,3 @@ __pycache__/
 celerybeat-schedule
 *.sqlite3
 tmp/
-tmp.py

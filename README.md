@@ -1,11 +1,9 @@
 # Currency
 
-1) Сгенерировать файл xlsx ('download-xlsx'). Пример ('download-csv')
-2) Написать команду (python ./src/manage.py parse_privatbank)
-   которая парсит валюты по апи https://api.privatbank.ua/#p24/exchangeArchive
+Cache, login
+1) Кастомные страницы для 500, 404  https://docs.djangoproject.com/en/2.2/ref/views/#error-views
 
-
-
+0) connect postgres
 email testtestapp454545@gmail.com
 
 password qwerty123456qwerty

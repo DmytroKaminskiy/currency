@@ -5,6 +5,7 @@ from celery.schedules import crontab
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = '7zbn5g%8%4)72%b6i(=$2gj9n3=hk7r%y36@i^8#$59e=a$e(i'
+# SECRET_KEY = '7zbn5g%8%4)72%b6i(=$2gj9n3=hk7r%awdy36awdawdawdawdaasdasd'
 
 # TODO
 DEBUG = True
@@ -60,6 +61,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
     }
 }
 

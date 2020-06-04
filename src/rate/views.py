@@ -4,8 +4,8 @@ from django.http import HttpResponse
 from django.views.generic import ListView, View, TemplateView
 
 from rate.models import Rate
+from rate.selectors import get_latest_rates
 from rate.utils import display
-from rate import model_choices as mch
 
 
 class RateList(ListView):
@@ -23,24 +23,7 @@ class LatestRatesView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        object_list = []
-        for source in mch.SOURCE_CHOICES:  # source
-            source = source[0]
-            for currency in mch.CURRENCY_TYPE_CHOICES:  # currency_type
-                currency = currency[0]
-                for type_ in mch.RATE_TYPE_CHOICES:  # type
-                    type_ = type_[0]
-
-                    rate = Rate.objects.filter(
-                        source=source,
-                        type=type_,
-                        currency_type=currency,
-                    ).last()
-                    if rate is not None:
-                        object_list.append(rate)
-
-        context['object_list'] = object_list
+        context['object_list'] = get_latest_rates()
         return context
 
 
