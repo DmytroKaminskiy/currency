@@ -1,6 +1,7 @@
 import os
 
 from celery.schedules import crontab
+from django.urls import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -97,6 +98,9 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
 AUTH_USER_MODEL = 'account.User'
 
@@ -112,3 +116,15 @@ CELERY_BEAT_SCHEDULE = {
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+LOGIN_REDIRECT_URL = reverse_lazy('index')
+LOGOUT_REDIRECT_URL = reverse_lazy('index')
+
+# TODO
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'testtestapp454545@gmail.com'
+EMAIL_HOST_PASSWORD = 'qwerty123456qwerty'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
