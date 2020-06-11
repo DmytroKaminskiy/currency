@@ -1,7 +1,10 @@
 import csv
 
-from django.http import HttpResponse
 from django.views.generic import ListView, View, TemplateView
+from datetime import datetime
+from openpyxl import Workbook
+from django.http import HttpResponse
+
 
 from rate.models import Rate
 from rate.selectors import get_latest_rates
@@ -41,10 +44,11 @@ class RateDownloadCSV(View):
         # Create the HttpResponse object with the appropriate CSV header.
         response = self.get_response()
 
-        writer = csv.writer(response)
+        writer = csv.writer(response)  # response.write
         writer.writerow(self.__class__.HEADERS)
 
         for rate in self.queryset:
+            # row
             values = []
             for attr in self.__class__.HEADERS:
                 values.append(display(rate, attr))
@@ -56,4 +60,58 @@ class RateDownloadCSV(View):
     def get_response(self):
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="rate.csv"'
+        return response
+
+
+class RateDownloadXLSX(View):
+    columns = [
+        'id',
+        'created',
+        'source',
+        'amount',
+        'type',
+    ]
+    queryset = Rate.objects.all().iterator()
+
+    def get(self, request):
+        """
+        Downloads all movies as Excel file with a single worksheet
+        """
+        # movie_queryset = Movie.objects.all()
+
+        response = HttpResponse(
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        )
+        today = datetime.now().strftime("%Y-%m-%d")
+        response['Content-Disposition'] = f'attachment; filename={today}-rates.xlsx'
+        workbook = Workbook()
+
+        # Get active worksheet/tab
+        worksheet = workbook.active
+        worksheet.title = 'Movies'
+
+        # Define the titles for columns
+        row_num = 1
+
+        # Assign the titles for each cell of the header
+        for col_num, column_title in enumerate(self.columns, 1):
+            cell = worksheet.cell(row=row_num, column=col_num)
+            cell.value = column_title
+
+        # Iterate through all movies
+        for rate in self.queryset:
+            row_num += 1
+
+            # row
+            row = []
+            for attr in self.__class__.columns:
+                row.append(display(rate, attr))
+
+            # Assign the data for each cell of the row
+            for col_num, cell_value in enumerate(row, 1):
+                cell = worksheet.cell(row=row_num, column=col_num)
+                cell.value = cell_value
+
+        workbook.save(response)
+
         return response
