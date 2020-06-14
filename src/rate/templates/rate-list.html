@@ -14,6 +14,12 @@
             <th scope="col">source</th>
             <th scope="col">amount</th>
             <th scope="col">type</th>
+
+            {% if request.user.is_superuser %}
+            <th scope="col">Update</th>
+            <th scope="col">Delete</th>
+            {% endif %}
+
         </tr>
         </thead>
         <tbody>
@@ -25,6 +31,12 @@
                 <td>{{ rate.get_source_display|title }}</td>
                 <td>{{ rate.amount }}</td>
                 <td>{{ rate.get_type_display|upper }}</td>
+
+                {% if request.user.is_superuser %}
+                <td><a href="{% url 'rate:update' rate.pk %}">Update</a></td>
+                <td><a href="{% url 'rate:delete' rate.pk %}">Delete</a></td>
+                {% endif %}
+
             </tr>
         {% endfor %}
         </tbody>

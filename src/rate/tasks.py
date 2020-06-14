@@ -1,10 +1,11 @@
+from bs4 import BeautifulSoup
+
 from celery import shared_task
 
 from rate import model_choices as mch
 from rate.utils import to_decimal
 
 import requests
-from bs4 import BeautifulSoup
 
 
 @shared_task

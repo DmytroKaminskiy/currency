@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Rate Edit
+{% endblock title %}
+
+{% block content %}
+    Rate Edit
+    <div class="row">
+        <div class="col">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button class="btn btn-primary" type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

@@ -2,14 +2,12 @@
 
 # local_settings
 
-1) Подключить + перевести все формы на https://django-crispy-forms.readthedocs.io/en/latest/
-2) В таблице всех рейтов иметь возожность удалить рейт
-   Использовать https://ccbv.co.uk/projects/Django/3.0/django.views.generic.edit/DeleteView/
-3) В таблице всех рейтов иметь возожность редактировать рейт
-   Использовать https://ccbv.co.uk/projects/Django/3.0/django.views.generic.edit/UpdateView/
-4) Действия 2 и 3 разрешены только суперюзерам # user.is_superuser
-   # https://docs.djangoproject.com/en/3.0/topics/auth/default/#django.contrib.auth.decorators.user_passes_test
-
+1) Написать тесты на Donwload xlsx
+2) Написать тесты на /rate/latest-rates/
+3) тесты /account/login/ + /account/logout/
+4) тесты на rate update/delete  # https://pytest-django.readthedocs.io/en/latest/helpers.html#admin-client-django-test-client-logged-in-as-admin
+5) add `pytest ./src/tests -s` to travis
+ 
 0) connect postgres
 
 email testtestapp454545@gmail.com

@@ -6,11 +6,9 @@ from django.urls import reverse_lazy
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = '7zbn5g%8%4)72%b6i(=$2gj9n3=hk7r%y36@i^8#$59e=a$e(i'
-# SECRET_KEY = '7zbn5g%8%4)72%b6i(=$2gj9n3=hk7r%awdy36awdawdawdawdaasdasd'
 
-# TODO
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+DEBUG = False
+ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -120,11 +118,8 @@ INTERNAL_IPS = [
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 LOGOUT_REDIRECT_URL = reverse_lazy('index')
 
-# TODO
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'testtestapp454545@gmail.com'
-EMAIL_HOST_PASSWORD = 'qwerty123456qwerty'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+try:
+    from settings.settings_local import *  # noqa
+except ImportError:
+    print('ImportError settings_local\n' * 5)  # noqa

@@ -1,10 +1,12 @@
 import csv
-
-from django.views.generic import ListView, View, TemplateView
 from datetime import datetime
-from openpyxl import Workbook
-from django.http import HttpResponse
 
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.http import HttpResponse
+from django.urls import reverse_lazy
+from django.views.generic import DeleteView, ListView, TemplateView, UpdateView, View
+
+from openpyxl import Workbook
 
 from rate.models import Rate
 from rate.selectors import get_latest_rates
@@ -115,3 +117,26 @@ class RateDownloadXLSX(View):
         workbook.save(response)
 
         return response
+
+
+class UpdateRate(UserPassesTestMixin, UpdateView):
+    template_name = 'rate-update.html'
+    queryset = Rate.objects.all()
+    fields = ('amount', 'source', 'currency_type', 'type')
+    success_url = reverse_lazy('rate:list')
+
+    def test_func(self):
+        return self.request.user.is_authenticated and\
+            self.request.user.is_superuser
+
+
+class DeleteRate(UserPassesTestMixin, DeleteView):
+    queryset = Rate.objects.all()
+    success_url = reverse_lazy('rate:list')
+
+    def get(self, request, *args, **kwargs):
+        return super().delete(request, *args, **kwargs)
+
+    def test_func(self):
+        return self.request.user.is_authenticated and\
+            self.request.user.is_superuser

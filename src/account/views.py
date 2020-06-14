@@ -1,11 +1,10 @@
+from account.models import Contact, User
+from account.tasks import send_email_async
+
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-
-from account.models import Contact, User
-
-from account.tasks import send_email_async
 
 
 def smoke(request):
