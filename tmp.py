@@ -1,3 +1,5 @@
+# gunicorn -w 4 --bind 0.0.0.0:8000 settings.wsgi
+
 # from time import sleep
 #
 # CACHE = {}
