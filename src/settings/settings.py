@@ -124,3 +124,5 @@ try:
     from settings.settings_local import *  # noqa
 except ImportError:
     print('ImportError settings_local\n' * 5)  # noqa
+
+# apt-get install python-dev libpq-dev postgresql postgresql-contrib
