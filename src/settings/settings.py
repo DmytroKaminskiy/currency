@@ -20,6 +20,7 @@ INSTALLED_APPS = [
 
     'django_extensions',
     'debug_toolbar',
+    'rest_framework',
 
     'account',
     'rate',
@@ -100,6 +101,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, '..', 'static_content', 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'static_content', 'media')
+
 
 AUTH_USER_MODEL = 'account.User'
 
