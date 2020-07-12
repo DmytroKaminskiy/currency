@@ -108,7 +108,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'static_content', 'media')
 
 AUTH_USER_MODEL = 'account.User'
 
-CELERY_BROKER_URL = 'amqp://localhost'
+# CELERY_BROKER_URL = 'amqp://localhost'
+# BROKER_URL = 'amqp://{0}:{1}@{2}:5672//'.format(
+#     os.environ.get('RABBITMQ_DEFAULT_USER', 'guest'),
+#     os.environ.get('RABBITMQ_DEFAULT_PASS', 'guest'),
+#     os.environ.get('RABBITMQ_DEFAULT_HOST', 'localhost')
+# )
+BROKER_URL = 'amqp://currency:currency@localhost:5672//'
+
 
 CELERY_BEAT_SCHEDULE = {
     'parse': {

@@ -1,0 +1,30 @@
+version: "3.3"
+
+services:
+  memcached:
+    image: memcached:latest
+    container_name: memcached
+    restart: always
+    ports:
+      - "11212:11211"
+
+  rabbitmq:
+    image: rabbitmq:3.8-rc-management
+    env_file: .env
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+
+  backend:
+#    image: rabbitmq:3.8-rc-management
+    env_file: .env
+    build: .
+    container_name: backend
+#    command: tail -f /dev/null
+    command: python ./src/manage.py runserver 0:8000
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/srv/project
