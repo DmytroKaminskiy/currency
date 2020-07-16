@@ -3,28 +3,76 @@ version: "3.3"
 services:
   memcached:
     image: memcached:latest
+    hostname: ${MEMCACHED_HOST}
     container_name: memcached
+    env_file: .env
     restart: always
-    ports:
-      - "11212:11211"
 
   rabbitmq:
     image: rabbitmq:3.8-rc-management
     env_file: .env
     container_name: rabbitmq
+    hostname: ${RABBITMQ_DEFAULT_HOST}
     restart: always
-    ports:
-      - "5672:5672"
 
   backend:
-#    image: rabbitmq:3.8-rc-management
     env_file: .env
     build: .
     container_name: backend
-#    command: tail -f /dev/null
-    command: python ./src/manage.py runserver 0:8000
+    command: ./commands/wsgi/${SERVER}.sh
     restart: always
+    depends_on:
+      - memcached
+      - rabbitmq
     ports:
       - "8000:8000"
     volumes:
       - ./:/srv/project
+
+  celery:
+    env_file: .env
+    build: .
+    container_name: celery
+    command: ./commands/start_celery.sh
+    restart: always
+    depends_on:
+      - memcached
+      - rabbitmq
+    volumes:
+      - ./:/srv/project
+
+  celerybeat:
+    env_file: .env
+    build: .
+    container_name: celerybeat
+    command: ./commands/start_celerybeat.sh
+    restart: always
+    depends_on:
+      - memcached
+      - rabbitmq
+    volumes:
+      - ./:/srv/project
+
+  postgres:
+    image: postgres:12.3-alpine
+    container_name: postgres
+    hostname: ${POSTGRES_HOST}
+    env_file: .env
+    restart: always
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  nginx:
+    image: nginx:1.17.4-alpine
+    container_name: nginx
+    volumes:
+      - ./nginx:/etc/nginx/conf.d/
+      - ./static_content:/etc/nginx/static_content/
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - backend
+
+volumes:
+  db_data: {}

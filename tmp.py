@@ -44,3 +44,5 @@
 # # Write some simple text.
 # worksheet.write('A1', 'Hello')
 # workbook.close()
+
+# celery -A settings worker -E --loglevel=info --workdir=/srv/project/src
