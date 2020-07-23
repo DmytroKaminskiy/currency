@@ -11,7 +11,4 @@ urlpatterns = [
     path('latest-rates/', views.LatestRatesView.as_view(), name='latest-rates'),
     path('download-csv/', views.RateDownloadCSV.as_view(), name='download-csv'),
     path('download-xlsx/', views.RateDownloadXLSX.as_view(), name='download-xlsx'),
-
-    path('rates/', views.RateListCreateView.as_view(), name='rates'),
-    path('rates/<int:pk>/', views.RateReadUpdateDeleteView.as_view(), name='rate'),
 ]
