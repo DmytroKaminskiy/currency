@@ -45,4 +45,10 @@
 # worksheet.write('A1', 'Hello')
 # workbook.close()
 
-# celery -A settings worker -E --loglevel=info --workdir=/srv/project/src
+# docker exec -it backend pytest ./src/tests --cov=src --cov-report html
+# docker exec -it backend pytest ./src/tests --cov=src --cov-report html --cov-fail-under=58.00
+
+# pip list --outdated
+# https://github.com/pytest-dev/pytest-cov
+# https://github.com/DmytroKaminskiy/currency_exchange/commit/8218d47bcf4ed752fc1bff6964d0c3ea1a160916
+# https://github.com/DmytroKaminskiy/currency_exchange/commit/2f79fca5ec8b2024806c150873d22a00e331bf6e

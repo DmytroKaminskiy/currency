@@ -48,15 +48,15 @@ def test_contact_us_incorrect_payload(client):
     assert len(mail.outbox) == 0
 
 
-def test_contact_us_correct_payload(client, settings):
+def test_contact_us_correct_payload(client, settings, fake):
     initial_count = Contact.objects.count()
     assert len(mail.outbox) == 0
 
     url = reverse('account:contact-us')
     payload = {
-        'email_from': 'mailmail@mail.com',
-        'title': 'hello world',
-        'message': 'hello world' * 50,
+        'email_from': fake.email(),
+        'title': fake.word(),
+        'message': fake.word(),
     }
     response = client.post(url, payload)
     assert response.status_code == 302
@@ -69,3 +69,22 @@ def test_contact_us_correct_payload(client, settings):
     assert email.body == payload['message']
     assert email.from_email == payload['email_from']
     assert email.to == [settings.DEFAULT_FROM_EMAIL]
+
+
+def test_signup_form(client, fake):
+    url = reverse('account:sign-up')
+    password = '123123qweqwe'
+    payload = {
+        'email': fake.email(),
+        'password1': password,
+        'password2': password + 'wrong',
+    }
+    response = client.post(url, payload)
+    assert response.status_code == 200
+
+    payload['password2'] = password
+    response = client.post(url, payload)
+    assert response.status_code == 302
+
+    response = client.post(url, payload)
+    assert response.status_code == 200
