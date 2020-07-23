@@ -6,4 +6,6 @@ __pycache__/
 celerybeat-schedule
 *.sqlite3
 tmp/
+static_content/
 settings_local.py
+.coverage
