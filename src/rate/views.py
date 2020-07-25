@@ -16,6 +16,8 @@ from rate.utils import display
 class RateList(ListView):
     queryset = Rate.objects.all()
     template_name = 'rate-list.html'
+    paginate_by = 20
+
 
     # def get_context_data(self, *args, **kwargs):
     #     context = super().get_context_data(*args, **kwargs)
