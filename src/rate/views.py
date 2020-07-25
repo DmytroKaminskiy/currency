@@ -8,15 +8,20 @@ from django.views.generic import DeleteView, ListView, TemplateView, UpdateView,
 
 from openpyxl import Workbook
 
+from rate.filters import RateFilter
 from rate.models import Rate
 from rate.selectors import get_latest_rates
 from rate.utils import display
 
+from django_filters.views import FilterView
+# from rate.filters import RateFilter
 
-class RateList(ListView):
+
+class RateList(FilterView):
     queryset = Rate.objects.all()
     template_name = 'rate-list.html'
     paginate_by = 20
+    filterset_class = RateFilter
 
 
     # def get_context_data(self, *args, **kwargs):

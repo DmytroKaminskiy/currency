@@ -7,6 +7,14 @@
 {% block content %}
     <a href="{% url 'rate:download-csv' %}">Download rates</a>
     <a href="{% url 'rate:download-xlsx' %}">Download rates (xlsx)</a>
+
+    <form method="get">
+        {{ filter.form.as_p }}
+        <button type="submit" class="btn btn-primary">
+            <span class="glyphicon glyphicon-search"></span> Search
+        </button>
+    </form>
+
     <table class="table table-striped">
         <thead>
         <tr>
