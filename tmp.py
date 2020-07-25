@@ -49,5 +49,7 @@
 # https://github.com/DmytroKaminskiy/currency_exchange/commit/8218d47bcf4ed752fc1bff6964d0c3ea1a160916
 # https://github.com/DmytroKaminskiy/currency_exchange/commit/2f79fca5ec8b2024806c150873d22a00e331bf6e
 
+# context_processor
+
 # add filters to API
 # add filters to download rates
