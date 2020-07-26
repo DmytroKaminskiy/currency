@@ -1,5 +1,6 @@
 import csv
 from datetime import datetime
+from urllib.parse import urlencode
 
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.http import HttpResponse
@@ -8,18 +9,26 @@ from django.views.generic import DeleteView, ListView, TemplateView, UpdateView,
 
 from openpyxl import Workbook
 
+from django_filters.views import FilterView
+
 from rate.models import Rate
 from rate.selectors import get_latest_rates
 from rate.utils import display
+from rate.filters import RateFilter
 
 
-class RateList(ListView):
+class RateList(FilterView):
     queryset = Rate.objects.all()
-    template_name = 'rate-list.html'
+    template_name = 'rate/rate_list.html'
+    paginate_by = 25
+    filterset_class = RateFilter
+
 
     # def get_context_data(self, *args, **kwargs):
     #     context = super().get_context_data(*args, **kwargs)
-    #     context['hello'] = 'world'
+    #     get = dict(tuple(self.request.GET.items()))
+    #     get.pop('page', None)
+    #     context['request_GET'] = urlencode(get)
     #     return context
 
 

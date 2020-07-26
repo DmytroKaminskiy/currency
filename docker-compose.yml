@@ -21,11 +21,14 @@ services:
     container_name: backend
     command: ./commands/wsgi/${SERVER}.sh
     restart: always
+    hostname: ${WSGI_HOST}
     depends_on:
       - memcached
       - rabbitmq
+      - postgres
     ports:
       - "8000:8000"
+      - "8001:8001"
     volumes:
       - ./:/srv/project
 
@@ -38,6 +41,7 @@ services:
     depends_on:
       - memcached
       - rabbitmq
+      - postgres
     volumes:
       - ./:/srv/project
 
@@ -50,6 +54,7 @@ services:
     depends_on:
       - memcached
       - rabbitmq
+      - postgres
     volumes:
       - ./:/srv/project
 
@@ -65,8 +70,14 @@ services:
   nginx:
     image: nginx:1.17.4-alpine
     container_name: nginx
+    env_file:
+      - .env
+    command: /bin/sh /etc/nginx/start_nginx.sh
     volumes:
-      - ./nginx:/etc/nginx/conf.d/
+      - ./nginx/.htpasswd:/etc/nginx/conf.d/.htpasswd
+      - ./nginx/proxy_params:/etc/nginx/conf.d/proxy_params
+      - ./commands/start_nginx.sh:/etc/nginx/start_nginx.sh
+      - ./nginx/default.template:/etc/nginx/template.conf
       - ./static_content:/etc/nginx/static_content/
     ports:
       - "80:80"

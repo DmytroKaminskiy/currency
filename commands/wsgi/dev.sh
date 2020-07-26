@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python ./src/manage.py runserver 0:8000
+python ./src/manage.py runserver 0:$WSGI_PORT
