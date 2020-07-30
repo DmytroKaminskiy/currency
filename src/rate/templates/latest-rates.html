@@ -30,3 +30,13 @@
         </tbody>
     </table>
 {% endblock content %}
+
+{% block extra_js %}
+    <script>
+        $(document).ready(function () {
+            $("table").click(function () {
+                alert('hello');
+            });
+        });
+    </script>
+{% endblock extra_js %}

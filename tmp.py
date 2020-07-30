@@ -57,3 +57,45 @@
 # GO to page "form"
 # pagination for API
 # add filters to API
+
+import re
+
+text = '''
+hello world AE6545ea awd dd hello world lorem AN8901WE
+12WE12AE WE123EA aaa www eee world$
+'''
+
+
+# pattern = re.compile(r'[A-Z]{0,2}[\d]{4}[A-Z]{2}', flags=re.IGNORECASE)
+pattern = re.compile(r'[A-Z]{0,2}[\d]{4}[A-Z]{2}')
+
+res = pattern.findall(text)
+
+
+#
+# if res is not None:
+#     print(res.group())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
