@@ -58,28 +58,42 @@
 # pagination for API
 # add filters to API
 
-import re
-
-text = '''
-hello world AE6545ea awd dd hello world lorem AN8901WE
-12WE12AE WE123EA aaa www eee world$
-'''
-
-
-# pattern = re.compile(r'[A-Z]{0,2}[\d]{4}[A-Z]{2}', flags=re.IGNORECASE)
-pattern = re.compile(r'[A-Z]{0,2}[\d]{4}[A-Z]{2}')
-
-res = pattern.findall(text)
+# import re
+#
+# text = '''
+# hello world AE6545ea awd dd hello world lorem AN8901WE
+# 12WE12AE WE123EA aaa www eee world$
+# '''
+#
+#
+# # pattern = re.compile(r'[A-Z]{0,2}[\d]{4}[A-Z]{2}', flags=re.IGNORECASE)
+# pattern = re.compile(r'[A-Z]{0,2}[\d]{4}[A-Z]{2}')
+#
+# res = pattern.findall(text)
 
 
 #
 # if res is not None:
 #     print(res.group())
 
+import requests
+
+def call(url):
+    response = requests.get(url)
+    print(response.status_code)
 
 
+def add(a, b, callback=None, callback_args: tuple=None):
+    result = a + b
+    if callback:
+        if callback_args is None:
+            callback_args = ()
 
+        callback(*callback_args)
 
+    return result
+
+print(add(1, 2, call, callback_args=('https://google.com', )))
 
 
 
