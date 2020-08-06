@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
+from django.core.mail import EmailMessage
 from django.db import models
+from django.template.loader import get_template
 
 
 def avatar_path(instance, filename):
@@ -9,6 +11,28 @@ def avatar_path(instance, filename):
 
 class User(AbstractUser):
     avatar = models.FileField(upload_to=avatar_path, blank=True, null=True)
+
+    def email_page(self):
+        from django.core.mail import EmailMessage
+        email = EmailMessage('... Subject ...', '... Body ...', self.email,
+                             [self.email])
+
+        # now let's create a csv file dynamically
+        import csv, io
+        attachment_csv_file = io.StringIO()
+
+        writer = csv.writer(attachment_csv_file)
+
+        labels = ['name', 'city', 'email']
+        writer.writerow(labels)
+
+        rows = [['Nitin', 'Bengaluru', 'nitinbhojwani1993@gmail.com'], ['X', 'Y', 'Z']]
+
+        for row in rows:
+            writer.writerow(row)
+
+        email.attach('attachment_file_name.csv', attachment_csv_file.getvalue(), 'text/csv')
+        email.send(fail_silently=False)
 
 
 # class Avatar(models.Model):
