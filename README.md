@@ -13,3 +13,8 @@
 
 email testtestapp454545@gmail.com
 password qwerty123456qwerty
+
+F functions
+select_for_update()
+only
+defer

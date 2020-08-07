@@ -1,6 +1,7 @@
 import csv
 from datetime import datetime
 from urllib.parse import urlencode
+from django.db.models import F
 
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.http import HttpResponse
@@ -11,7 +12,7 @@ from openpyxl import Workbook
 
 from django_filters.views import FilterView
 
-from rate.models import Rate
+from rate.models import Rate, Track
 from rate.selectors import get_latest_rates
 from rate.utils import display
 from rate.filters import RateFilter
@@ -22,6 +23,18 @@ class RateList(FilterView):
     template_name = 'rate/rate_list.html'
     paginate_by = 25
     filterset_class = RateFilter
+
+    def get(self, request, *args, **kwargs):
+        print('GET')
+        # track, created = Track.objects.get_or_create()
+        # from time import sleep
+        # print(track.counter)
+        # sleep(30)
+        # track.counter = track.counter + 1
+        # track.save()
+        Track.objects.all().update(counter=F('counter') + 1)
+
+        return super().get(request, *args, **kwargs)
 
 
     # def get_context_data(self, *args, **kwargs):

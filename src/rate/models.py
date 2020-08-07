@@ -14,3 +14,7 @@ class Rate(models.Model):
     def save(self, *args, **kwargs):
         self.amount = to_decimal(self.amount)
         super().save(*args, **kwargs)
+
+
+class Track(models.Model):
+    counter = models.PositiveIntegerField(default=0)
