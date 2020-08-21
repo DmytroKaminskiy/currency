@@ -1,8 +1,9 @@
 from django.core.cache import cache
 from django.core.management import call_command
 
-import pytest
 from faker import Faker
+
+import pytest
 
 from pytest_django.fixtures import _django_db_fixture_helper
 
@@ -30,9 +31,7 @@ def django_db_setup(django_db_setup, django_db_blocker):
 
 @pytest.fixture(scope='session')
 def fake():
-    print('START')
     yield Faker()
-    print('END')
 
 
 @pytest.fixture(scope='session', autouse=True)

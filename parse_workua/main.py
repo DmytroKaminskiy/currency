@@ -15,7 +15,7 @@ ua = UserAgent()
 
 # response = requests.get(BASE_URL + '?page=1')  WRONG
 with open('workua.txt', 'w') as file:
-    page = 772
+    page = 0
 
     while True:
         page += 1
@@ -38,10 +38,3 @@ with open('workua.txt', 'w') as file:
         for elem in res:
             href = elem.find('a').attrs['href']
             file.write(f'{href}\n')
-
-
-
-
-
-
-

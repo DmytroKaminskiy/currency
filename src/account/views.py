@@ -1,13 +1,15 @@
 from account.forms import SignUpForm
 from account.models import Contact, User
 from account.tasks import send_email_async
+from account.tokens import account_activation_token
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, Http404
-from django.shortcuts import redirect
+from django.http import Http404, HttpResponse
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.utils.encoding import force_text
+from django.utils.http import urlsafe_base64_decode
 from django.views.generic import CreateView, UpdateView
-from account.tokens import account_activation_token
 
 
 def smoke(request):
@@ -55,10 +57,6 @@ class SignUp(CreateView):
     model = User
     success_url = reverse_lazy('index')
     form_class = SignUpForm
-
-
-from django.utils.encoding import force_text
-from django.utils.http import urlsafe_base64_decode
 
 
 class Activate(UpdateView):

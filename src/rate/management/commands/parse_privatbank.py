@@ -41,7 +41,6 @@ class Command(BaseCommand):
                   f'?json&date={date.strftime(date_format)}'
             response = requests.get(url)
             if response.status_code != 200:
-                print(response.content)
                 break
 
             rj = response.json()

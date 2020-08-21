@@ -2,8 +2,8 @@ import os
 
 from django.conf import settings
 
-from rate.tasks import parse_privatbank, parse_aval
 from rate.models import Rate
+from rate.tasks import parse_aval, parse_privatbank
 
 
 class Response:
@@ -43,7 +43,6 @@ def test_privat(mocker):
     assert Rate.objects.count() == rate_initial_count + 4
     parse_privatbank()
     assert Rate.objects.count() == rate_initial_count + 4
-
 
 
 def test_aval(mocker):

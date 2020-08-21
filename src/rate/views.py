@@ -1,21 +1,20 @@
 import csv
 from datetime import datetime
-from urllib.parse import urlencode
-from django.db.models import F
 
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.db.models import F
 from django.http import HttpResponse
 from django.urls import reverse_lazy
-from django.views.generic import DeleteView, ListView, TemplateView, UpdateView, View
-
-from openpyxl import Workbook
+from django.views.generic import DeleteView, TemplateView, UpdateView, View
 
 from django_filters.views import FilterView
 
+from openpyxl import Workbook
+
+from rate.filters import RateFilter
 from rate.models import Rate, Track
 from rate.selectors import get_latest_rates
 from rate.utils import display
-from rate.filters import RateFilter
 
 
 class RateList(FilterView):
@@ -25,7 +24,7 @@ class RateList(FilterView):
     filterset_class = RateFilter
 
     def get(self, request, *args, **kwargs):
-        print('GET')
+        # print('GET')
         # track, created = Track.objects.get_or_create()
         # from time import sleep
         # print(track.counter)
@@ -35,7 +34,6 @@ class RateList(FilterView):
         Track.objects.all().update(counter=F('counter') + 1)
 
         return super().get(request, *args, **kwargs)
-
 
     # def get_context_data(self, *args, **kwargs):
     #     context = super().get_context_data(*args, **kwargs)
@@ -148,8 +146,8 @@ class UpdateRate(UserPassesTestMixin, UpdateView):
     success_url = reverse_lazy('rate:list')
 
     def test_func(self):
-        return self.request.user.is_authenticated and\
-            self.request.user.is_superuser
+        return self.request.user.is_authenticated and \
+               self.request.user.is_superuser
 
 
 class DeleteRate(UserPassesTestMixin, DeleteView):
@@ -160,5 +158,5 @@ class DeleteRate(UserPassesTestMixin, DeleteView):
         return super().delete(request, *args, **kwargs)
 
     def test_func(self):
-        return self.request.user.is_authenticated and\
-            self.request.user.is_superuser
+        return self.request.user.is_authenticated and \
+               self.request.user.is_superuser

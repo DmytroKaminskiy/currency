@@ -5,8 +5,8 @@ register = template.Library()
 
 @register.inclusion_tag('parts/pagination.html', takes_context=True)
 def paginate(context, page, begin_pages=1, end_pages=1,
-                      before_pages=2, after_pages=2,
-                      template='parts/pagination.html'):
+             before_pages=2, after_pages=2,
+             template='parts/pagination.html'):
     """
     Return a Digg-like pagination,
     by splitting long list of page into 3 blocks of pages.

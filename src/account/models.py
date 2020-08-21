@@ -1,11 +1,11 @@
+import csv
+import io
+
 from django.contrib.auth.models import AbstractUser
-from django.core.mail import EmailMessage
 from django.db import models
-from django.template.loader import get_template
 
 
 def avatar_path(instance, filename):
-    print(f'{instance.id}/{filename}')
     return f'{instance.id}/{filename}'
 
 
@@ -19,7 +19,6 @@ class User(AbstractUser):
             [self.email])
 
         # now let's create a csv file dynamically
-        import csv, io
         attachment_csv_file = io.StringIO()
 
         writer = csv.writer(attachment_csv_file)

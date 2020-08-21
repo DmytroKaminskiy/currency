@@ -1,3 +1,3 @@
 #!/bin/bash
 
-gunicorn -w 4 -b 0.0.0.0:8000 --chdir /srv/project/src settings.wsgi --timeout 10
+gunicorn -w $WSGI_WORKERS -b 0.0.0.0:$WSGI_PORT --chdir /srv/project/src settings.wsgi --timeout $WSGI_TIMEOUT
