@@ -9,6 +9,7 @@ script:
   - pip check
   - pytest ./src/tests -s --cov-fail-under=15
 env:
-  - SECRET_KEY=supersecretkey
-  - SERVER=dev
-  - ALLOWED_HOSTS=127.0.0.1:localhost:*
+  global:
+    - SECRET_KEY=supersecretkey
+    - SERVER=dev
+    - ALLOWED_HOSTS=127.0.0.1:localhost:*
